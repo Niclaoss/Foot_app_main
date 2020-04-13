@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% load static from staticfiles %}
+
+{% block title %}
+    {% if not user.is_authenticated %}{{ block.super }} - Welcome
+    {% else %}{{ block.super }} - {{ user.first_name }}'s Profile
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="grid-25">
+        <img class="img-responsive img-circle" src="{% static 'img/champleague1.jpg' %}">
+    </div>
+    <div class="grid-65">
+        <h1>Welcome!</h1>
+        <p>Welcome to the Foot App! You will be able to create your profile and load your avatar. After you have created an account,
+            you will be able to login, logout, view your profile and change your password. The site is under construction!</p>
+
+        {% if not user.is_authenticated %}
+            <p>I see that you're not logged in, or haven't created an account yet. Click a button below, or at the top right corner to get
+                started!</p>
+            <a href="{% url 'accounts:sign_in' %}" class="button">Sign In</a>
+            <a href="{% url 'accounts:sign_up' %}" class="button">Sign Up</a>
+        {% endif %}
+    </div>
+{% endblock %}
