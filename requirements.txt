@@ -1,6 +1,6 @@
 colorama==0.3.7
 coverage==4.3.4
-Django==1.10.5
+Django==1.11.28
 django-bootstrap3==8.1.0
 django-countries==4.0
 django-password-strength==1.2.1
