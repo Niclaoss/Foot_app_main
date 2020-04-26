@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% load static from staticfiles %}
+{% load static %}
 
 {% block title %}
     {% if not user.is_authenticated %}{{ block.super }} - Welcome

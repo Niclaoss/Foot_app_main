@@ -23,7 +23,7 @@ from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
+    url(r'^accounts/', include(('accounts.urls', 'app_name'), namespace='accounts')),
     url(r'^$', views.home, name='home'),
 ]
 
@@ -31,4 +31,4 @@ urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT)
+                          document_root=settings.MEDIA_ROOT)

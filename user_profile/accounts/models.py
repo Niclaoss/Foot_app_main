@@ -7,7 +7,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils import timezone
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from smartfields import fields
 from django_countries.fields import CountryField
@@ -74,14 +74,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return "{} {} (@{})".format(self.first_name, self.last_name,
-            self.username)
+                                    self.username)
 
 
 class UserProfile(models.Model):
     """User profile data."""
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    # dob = models.DateTimeField(blank=True, null=True)
-    # bio = models.CharField(max_length=140, blank=True, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     avatar = fields.ImageField(upload_to='avatar_photos/', blank=True, null=True)
     location = models.CharField(max_length=40, blank=True, null=True)
     country = CountryField(blank=True, null=True)

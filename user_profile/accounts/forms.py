@@ -24,6 +24,7 @@ class UserCreateForm(UserCreationForm):
         fields = [
             'first_name',
             'last_name',
+            'username',
             'email',
             'verify_email',
             'password1',
@@ -100,7 +101,7 @@ class UserUpdateForm(forms.ModelForm):
     """Form for updating user basic information."""
     class Meta:
         model = models.User
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'username']
 
     def clean(self):
         data = self.cleaned_data
@@ -155,7 +156,7 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
             '<li>Must include one or more numerical digits</li>\n'
             '<li>Must include at least one special character, such as @, #, or'
             ' $</li>\n'
-            "<li>Cannot contain your username or parts of your full name, "
+            "<li>Cannot contain your player name or parts of your full name, "
             'such as your first name</li>\n'
             '</ul>'
         )
@@ -201,12 +202,12 @@ class ValidatingPasswordChangeForm(PasswordChangeForm):
         # as his first name
         user_first_name = user.first_name.lower()
         user_last_name = user.last_name.lower()
-        user_username = user.username.lower()
+        user_player_name = user.player_name.lower()
 
         if (user_first_name in new_password.lower() or user_last_name in
-          new_password.lower() or user_username in new_password.lower()):
+          new_password.lower() or user_player_name in new_password.lower()):
             raise forms.ValidationError("The new password cannot contain your "
-                "username ({}) or parts of your full name ({} {}).".format(
-                    user.username, user.first_name, user.last_name))
+                "player name ({}) or parts of your full name ({} {}).".format(
+                    user.player_name, user.first_name, user.last_name))
 
         return self.cleaned_data

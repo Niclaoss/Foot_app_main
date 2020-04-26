@@ -3,7 +3,7 @@ from django.contrib.auth import (
     authenticate, login, logout, update_session_auth_hash
 )
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
