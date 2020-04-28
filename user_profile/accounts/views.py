@@ -19,7 +19,7 @@ def sign_in(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = authenticate(
-                email=request.POST['username'],
+                username=request.POST['username'],
                 password=request.POST['password']
             )
             if user is not None:
@@ -50,6 +50,7 @@ def sign_up(request):
             user = authenticate(
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
+                username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
                 password=form.cleaned_data['password1']
             )

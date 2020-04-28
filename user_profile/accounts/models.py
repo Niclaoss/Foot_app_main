@@ -15,16 +15,16 @@ from django_countries.fields import CountryField
 
 class UserManager(BaseUserManager):
     """Create and manage users."""
-    def create_user(self, first_name, last_name, email,
-                    username=None, password=None):
+    def create_user(self, first_name, last_name, email, username=None, password=None):
         if not email:
             raise ValueError("Users must have an email address")
-        if not first_name:
+        """if not first_name:
             raise ValueError("Users must have a first name")
         if not last_name:
-            raise ValueError("Users must have a last name")
+            raise ValueError("Users must have a last name")"""
         if not username:
-            username = email.split('@')[0]
+            # username = email.split('@')[0]
+            raise ValueError("Users must have a username")
 
         user = self.model(
             first_name=first_name,
@@ -36,8 +36,7 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, first_name, last_name, email, password,
-        username=None):
+    def create_superuser(self, first_name, last_name, email, password, username=None):
         user = self.create_user(
             first_name,
             last_name,
@@ -53,8 +52,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User model data."""
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
     username = models.CharField(max_length=40, unique=True, null=True)
     email = models.EmailField(unique=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -63,8 +62,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    # USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
+    # REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return "@{}".format(self.username)
